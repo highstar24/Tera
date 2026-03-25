@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <!-- 🚨 오픈 그래프 (카톡 공유 썸네일/제목) -->
     <title>카나프테라퓨틱스 카드뉴스(S)</title>
     <meta property="og:title" content="카나프테라퓨틱스 카드뉴스(S)">
-    <meta property="og:description" content="주가 하락의 진실과 2025년 핵심 모멘텀 분석">
+    <meta property="og:description" content="2028년 흑자전환을 향한 핵심 파이프라인 심층 분석">
     <meta property="og:image" content="https://cdn.jsdelivr.net/gh/highstar24/logo@main/logo_png.png">
 
     <style>
@@ -24,11 +23,25 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Noto Sans KR', sans-serif; word-break: keep-all; }
         body, html { width: 100vw; height: 100vh; overflow: hidden; background-color: var(--dark); touch-action: none; }
-        .carousel-container { display: flex; width: 600vw; height: 100vh; transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
 
-        .card { width: 100vw; height: 100vh; position: relative; display: flex; flex-direction: column; padding: 0; }
+        /* 🚨 슬라이드 래퍼 추가: 카드를 무한으로 복제 배치할 수 있도록 설정 */
+        .carousel-wrapper {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .carousel-container { 
+            display: flex; 
+            width: 100%; 
+            height: 100vh; 
+            /* 자바스크립트에서 제어할 수 있도록 여기서는 기본만 남김 */
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); 
+        }
+
+        .card { flex-shrink: 0; width: 100vw; height: 100vh; position: relative; display: flex; flex-direction: column; padding: 0; }
         .header-section { padding: 40px 30px 20px; display: flex; flex-direction: column; position: relative; z-index: 2; height: 180px; }
-
         .content-section { flex: 1; border-radius: 30px 30px 0 0; padding: 35px 25px 90px; overflow-y: auto; display: flex; flex-direction: column; gap: 18px; touch-action: pan-y; }
 
         .card.cover, .card.cta { background: var(--dark); justify-content: center; align-items: center; padding: 40px; text-align: center; }
@@ -42,42 +55,28 @@
         .card-5 { background: var(--green); }
         .card-5 .content-section { background: var(--blue); }
 
-        /* 🚨 1. 로고 위치 수정: top을 25px로 내려서 안정감 확보 (크기 58px) */
         .logo { position: absolute; top: 25px; right: 15px; width: 58px; z-index: 10; pointer-events: none; }
-
         .tag { display: inline-block; background: rgba(255,255,255,0.1); color: var(--neon); padding: 8px 18px; border-radius: 20px; font-weight: 800; font-size: 1rem; margin-bottom: 20px; border: 1px solid rgba(225,251,98,0.3); }
-
         .page-title { color: white; font-size: 1.8rem; font-weight: 800; line-height: 1.3; margin-top: 5px; }
         .card-5 .page-title { color: var(--dark); } 
-
-        /* 🚨 2. 투명 얼음조각(방어막) 수정: 로고가 내려온 만큼 방어막의 크기(55px) 늘려줌 (1줄만 간섭) */
-        .page-title::before {
-            content: "";
-            float: right;
-            width: 55px;  
-            height: 55px; 
-        }
+        .page-title::before { content: ""; float: right; width: 55px; height: 55px; }
 
         .page-num-header { font-size: 2.5rem; font-weight: 900; color: rgba(255,255,255,0.3); position: absolute; left: 30px; top: 35px; z-index: 1;}
         .card-5 .page-num-header { color: rgba(0,0,0,0.1); }
 
         .info-card { background: white; border-radius: 16px; padding: 25px 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; }
         .info-card.dark { background: var(--dark); color: white; }
-
         .info-card h3 { font-size: 1.25rem; font-weight: 800; margin-bottom: 8px; color: var(--dark); line-height: 1.3; }
         .info-card.dark h3 { color: white; }
-
         .info-card p { font-size: 1.05rem; line-height: 1.5; color: #444; font-weight: 500; }
         .info-card.dark p { color: #d0d0d0; }
-
         .info-badge { display: inline-block; font-size: 0.9rem; font-weight: 800; color: var(--blue); margin-bottom: 8px; }
         .info-card.dark .info-badge { color: var(--neon); }
 
         .cover-title { font-size: 3.2rem; font-weight: 900; color: var(--neon); line-height: 1.2; margin-bottom: 25px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); padding-right: 0;}
         .cover-sub { font-size: 1.25rem; color: white; line-height: 1.6; margin-bottom: 40px; font-weight: 600; }
 
-        /* 사용자가 요청한 버튼 사이즈 축소 반영 */
-        .cta-btn { display: inline-flex; align-items: center; justify-content: center; background: var(--neon); color: var(--dark); text-decoration: none; padding: 16px 28px; border-radius: 50px; font-weight: 900; font-size: 1.15rem; margin-top: 30px; box-shadow: 0 4px 15px rgba(225, 251, 98, 0.2); width: auto; min-width: 220px; max-width: 280px; }
+        .cta-btn { display: inline-flex; align-items: center; justify-content: center; background: var(--neon); color: var(--dark); text-decoration: none; padding: 20px 30px; border-radius: 50px; font-weight: 900; font-size: 1.3rem; margin-top: 30px; box-shadow: 0 6px 20px rgba(225, 251, 98, 0.3); width: 100%; max-width: 320px; }
 
         .bottom-bar { position: absolute; bottom: 0; left: 0; width: 100%; height: 60px; background: rgba(46, 42, 80, 0.95); display: flex; justify-content: space-between; align-items: center; padding: 0 25px; z-index: 10; pointer-events: none;}
         .bottom-text { font-size: 0.9rem; color: var(--neon); font-weight: 700; }
@@ -85,146 +84,184 @@
     </style>
 </head>
 <body>
-<div class="carousel-container" id="slider">
 
-    <!-- 1페이지 (내용 긍정적 모멘텀으로 유지) -->
-    <div class="card cover">
-        <div class="tag">KOSDAQ 혁신 신약</div>
-        <h1 class="cover-title">카나프<br>테라퓨틱스</h1>
-        <p class="cover-sub">2028년 흑자전환을 향한<br>핵심 파이프라인 심층 분석</p>
-        <div class="info-card dark" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); max-width: 320px;">
-            <h3 style="color:var(--neon); text-align:center; font-size: 1.1rem; margin-bottom: 5px;">글로벌 기술이전 정조준</h3>
-            <p style="text-align:center; font-size: 1.5rem; font-weight: 900; color: white;">7대 핵심 파이프라인</p>
+<div class="carousel-wrapper">
+    <div class="carousel-container" id="slider">
+
+        <!-- 1페이지 (긍정적 모멘텀) -->
+        <div class="card cover">
+            <div class="tag">KOSDAQ 혁신 신약</div>
+            <h1 class="cover-title">카나프<br>테라퓨틱스</h1>
+            <p class="cover-sub">2028년 흑자전환을 향한<br>핵심 파이프라인 심층 분석</p>
+            <div class="info-card dark" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); max-width: 320px;">
+                <h3 style="color:var(--neon); text-align:center; font-size: 1.1rem; margin-bottom: 5px;">글로벌 기술이전 정조준</h3>
+                <p style="text-align:center; font-size: 1.5rem; font-weight: 900; color: white;">7대 핵심 파이프라인</p>
+            </div>
+            <div class="bottom-bar" style="background: transparent;">
+                <div class="page-indicator" style="width: 100%; text-align: right;">01 / 06</div>
+            </div>
         </div>
-        <div class="bottom-bar" style="background: transparent;">
-            <div class="page-indicator" style="width: 100%; text-align: right;">01 / 06</div>
+
+        <!-- 2페이지 -->
+        <div class="card card-2">
+            <div class="header-section">
+                <span class="page-num-header">02</span>
+                <div style="padding-left: 60px;"><h2 class="page-title">독자적 발굴 시스템<br>질병 시그니처</h2></div>
+            </div>
+            <div class="content-section">
+                <div class="info-card">
+                    <span class="info-badge">유전체 데이터 분석 기반</span>
+                    <h3>인간 유전체 데이터 플랫폼</h3>
+                    <p>대규모 데이터를 분석하여 질병과 연관성이 높은 타겟을 도출해 내는 핵심 기술을 보유하고 있습니다. 이를 통해 개발 성공 확률을 획기적으로 높입니다.</p>
+                </div>
+                <div class="info-card dark">
+                    <span class="info-badge" style="color:var(--neon)">파이프라인 경쟁력</span>
+                    <h3>이중항체부터 ADC까지</h3>
+                    <p>단순한 연구 단계에 머무르지 않고, 최적의 모달리티를 적용해 실제 조기 사업화와 글로벌 기술이전을 적극 추진 중입니다.</p>
+                </div>
+            </div>
+            <div class="bottom-bar"><div class="bottom-text">기술적 해자 구축 완료</div><div class="page-indicator">02 / 06</div></div>
         </div>
+
+        <!-- 3페이지 -->
+        <div class="card card-3">
+            <div class="header-section">
+                <span class="page-num-header">03</span>
+                <div style="padding-left: 60px;"><h2 class="page-title">올해 강력한 모멘텀<br>KNP-502 임상</h2></div>
+            </div>
+            <div class="content-section">
+                <div class="info-card">
+                    <span class="info-badge">종양 미세환경 개선</span>
+                    <h3>5월 FDA 임상 1상 진입</h3>
+                    <p>가장 가시적인 성과가 기대되는 면역항암제 파이프라인입니다. 당장 올해 5월 미국 FDA에 임상시험계획(IND)을 신청합니다.</p>
+                </div>
+                <div class="info-card dark" style="background:var(--dark); padding: 25px 20px;">
+                    <h3 style="color:var(--neon); font-size:1.15rem;">🔥 추가 임상 모멘텀</h3>
+                    <p style="color:#d0d0d0;">이어 11월에도 추가 1상 IND 신청이 예고되어 있어, 성공적인 임상 승인 여부가 기업 가치 상승의 최우선 트리거입니다.</p>
+                </div>
+            </div>
+            <div class="bottom-bar"><div class="bottom-text">가시적인 파이프라인</div><div class="page-indicator">03 / 06</div></div>
+        </div>
+
+        <!-- 4페이지 -->
+        <div class="card card-4">
+            <div class="header-section">
+                <span class="page-num-header">04</span>
+                <div style="padding-left: 60px;"><h2 class="page-title">기술이전의 관문<br>글로벌 학회 출격</h2></div>
+            </div>
+            <div class="content-section">
+                <div class="info-card">
+                    <span class="info-badge">4월 AACR (미국암연구학회)</span>
+                    <h3>차세대 면역항암제 KNP-101</h3>
+                    <p>에스티팜과 공동 연구 중인 이중항체. 기존 IL-12의 전신 독성을 획기적으로 줄인 핵심 데이터를 공개합니다.</p>
+                </div>
+                <div class="info-card" style="background:#fff3cd; border:none;">
+                    <h3 style="color:#856404; font-size:1.15rem;">💡 5월 ARVO (시과학안과학회)</h3>
+                    <p style="color:#664d03;">안과 질환 치료제 KNP-301 발표. 습성 황반변성을 타겟하는 이중 표적(C3b, VEGF) 차단제의 효능을 입증합니다.</p>
+                </div>
+            </div>
+            <div class="bottom-bar"><div class="bottom-text">상반기 학회 릴레이</div><div class="page-indicator">04 / 06</div></div>
+        </div>
+
+        <!-- 5페이지 -->
+        <div class="card card-5">
+            <div class="header-section">
+                <span class="page-num-header">05</span>
+                <div style="padding-left: 60px;">
+                    <h2 class="page-title">빅파마가<br>주목하는 차세대<br>ADC 파이프라인</h2>
+                </div>
+            </div>
+            <div class="content-section">
+                <div class="info-card dark" style="background:var(--dark); text-align:center; padding: 30px 20px;">
+                    <p style="color:#d0d0d0; margin-bottom: 10px;">cMET x EGFR 이중항체</p>
+                    <h3 style="font-size: 1.8rem; color:var(--neon);">KNP-701의 폭발력</h3>
+                </div>
+                <div class="info-card">
+                    <ul style="list-style:none; padding:0; font-size:1.1rem; line-height:1.8;">
+                        <li style="border-bottom:1px solid #eee; padding:10px 0;"><b>🎯 이중 타겟팅:</b> cMET & EGFR 동시 공략</li>
+                        <li style="border-bottom:1px solid #eee; padding:10px 0;"><b>🛡️ 내성 극복:</b> 기존 표적항암제 한계 돌파</li>
+                        <li style="padding:10px 0;"><b>🤝 기술이전 기대:</b> 향후 L/O 핵심 카드</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="bottom-bar"><div class="bottom-text">가장 뜨거운 ADC 섹터</div><div class="page-indicator">05 / 06</div></div>
+        </div>
+
+        <!-- 6페이지 -->
+        <div class="card cta">
+            <h2 style="color: white; margin-bottom: 25px; font-size: 2.2rem; line-height: 1.4; font-weight: 900;">
+                투자의 완성은<br><span style="color: var(--neon);">하이스타 블로그</span>에서
+            </h2>
+            <p style="color: #d0d0d0; margin-bottom: 15px; font-size: 1.2rem; line-height: 1.6;">
+                카나프테라퓨틱스의 전체 파이프라인과<br>더 깊은 분석 인사이트를<br>지금 바로 확인하세요.
+            </p>
+            <a href="https://blog.naver.com/jin0oo" class="cta-btn" target="_blank">하이스타 블로그 바로가기 ➔</a>
+            <div class="bottom-bar" style="background: transparent; flex-direction: column; justify-content: flex-end; padding-bottom: 30px;">
+                <div style="font-size: 0.85rem; color: rgba(255,255,255,0.4); text-align: center; margin-bottom: 15px;">본 콘텐츠는 정보 제공 목적이며<br>특정 종목의 매수/매도를 추천하지 않습니다.</div>
+                <div class="page-indicator" style="color: rgba(255,255,255,0.6);">06 / 06</div>
+            </div>
+        </div>
+
     </div>
-
-    <!-- 2페이지 -->
-    <div class="card card-2">
-        <div class="header-section">
-            <span class="page-num-header">02</span>
-            <div style="padding-left: 60px;"><h2 class="page-title">독자적 발굴 시스템<br>질병 시그니처</h2></div>
-        </div>
-        <div class="content-section">
-            <div class="info-card">
-                <span class="info-badge">유전체 데이터 분석 기반</span>
-                <h3>인간 유전체 데이터 플랫폼</h3>
-                <p>대규모 데이터를 분석하여 질병과 연관성이 높은 타겟을 도출해 내는 핵심 기술을 보유하고 있습니다. 이를 통해 개발 성공 확률을 획기적으로 높입니다.</p>
-            </div>
-            <div class="info-card dark">
-                <span class="info-badge" style="color:var(--neon)">파이프라인 경쟁력</span>
-                <h3>이중항체부터 ADC까지</h3>
-                <p>단순한 연구 단계에 머무르지 않고, 최적의 모달리티를 적용해 실제 조기 사업화와 글로벌 기술이전을 적극 추진 중입니다.</p>
-            </div>
-        </div>
-        <div class="bottom-bar"><div class="bottom-text">기술적 해자 구축 완료</div><div class="page-indicator">02 / 06</div></div>
-    </div>
-
-    <!-- 3페이지 -->
-    <div class="card card-3">
-        <div class="header-section">
-            <span class="page-num-header">03</span>
-            <div style="padding-left: 60px;"><h2 class="page-title">올해 강력한 모멘텀<br>KNP-502 임상</h2></div>
-        </div>
-        <div class="content-section">
-            <div class="info-card">
-                <span class="info-badge">종양 미세환경 개선</span>
-                <h3>5월 FDA 임상 1상 진입</h3>
-                <p>가장 가시적인 성과가 기대되는 면역항암제 파이프라인입니다. 당장 올해 5월 미국 FDA에 임상시험계획(IND)을 신청합니다.</p>
-            </div>
-            <div class="info-card dark" style="background:var(--dark); padding: 25px 20px;">
-                <h3 style="color:var(--neon); font-size:1.15rem;">🔥 추가 임상 모멘텀</h3>
-                <p style="color:#d0d0d0;">이어 11월에도 추가 1상 IND 신청이 예고되어 있어, 성공적인 임상 승인 여부가 기업 가치 상승의 최우선 트리거입니다.</p>
-            </div>
-        </div>
-        <div class="bottom-bar"><div class="bottom-text">가시적인 파이프라인</div><div class="page-indicator">03 / 06</div></div>
-    </div>
-
-    <!-- 4페이지 -->
-    <div class="card card-4">
-        <div class="header-section">
-            <span class="page-num-header">04</span>
-            <div style="padding-left: 60px;"><h2 class="page-title">기술이전의 관문<br>글로벌 학회 출격</h2></div>
-        </div>
-        <div class="content-section">
-            <div class="info-card">
-                <span class="info-badge">4월 AACR (미국암연구학회)</span>
-                <h3>차세대 면역항암제 KNP-101</h3>
-                <p>에스티팜과 공동 연구 중인 이중항체. 기존 IL-12의 전신 독성을 획기적으로 줄인 핵심 데이터를 공개합니다.</p>
-            </div>
-            <div class="info-card" style="background:#fff3cd; border:none;">
-                <h3 style="color:#856404; font-size:1.15rem;">💡 5월 ARVO (시과학안과학회)</h3>
-                <p style="color:#664d03;">안과 질환 치료제 KNP-301 발표. 습성 황반변성을 타겟하는 이중 표적(C3b, VEGF) 차단제의 효능을 입증합니다.</p>
-            </div>
-        </div>
-        <div class="bottom-bar"><div class="bottom-text">상반기 학회 릴레이</div><div class="page-indicator">04 / 06</div></div>
-    </div>
-
-    <!-- 5페이지 -->
-    <div class="card card-5">
-        <div class="header-section">
-            <span class="page-num-header">05</span>
-            <div style="padding-left: 60px;">
-                <h2 class="page-title">빅파마가<br>주목하는 차세대<br>ADC 파이프라인</h2>
-            </div>
-        </div>
-        <div class="content-section">
-            <div class="info-card dark" style="background:var(--dark); text-align:center; padding: 30px 20px;">
-                <p style="color:#d0d0d0; margin-bottom: 10px;">cMET x EGFR 이중항체</p>
-                <h3 style="font-size: 1.8rem; color:var(--neon);">KNP-701의 폭발력</h3>
-            </div>
-            <div class="info-card">
-                <ul style="list-style:none; padding:0; font-size:1.1rem; line-height:1.8;">
-                    <li style="border-bottom:1px solid #eee; padding:10px 0;"><b>🎯 이중 타겟팅:</b> cMET & EGFR 동시 공략</li>
-                    <li style="border-bottom:1px solid #eee; padding:10px 0;"><b>🛡️ 내성 극복:</b> 기존 표적항암제 한계 돌파</li>
-                    <li style="padding:10px 0;"><b>🤝 기술이전 기대:</b> 향후 L/O 핵심 카드</li>
-                </ul>
-            </div>
-        </div>
-        <div class="bottom-bar"><div class="bottom-text">가장 뜨거운 ADC 섹터</div><div class="page-indicator">05 / 06</div></div>
-    </div>
-
-    <!-- 6페이지 -->
-    <div class="card cta">
-        <h2 style="color: white; margin-bottom: 25px; font-size: 2.2rem; line-height: 1.4; font-weight: 900;">
-            투자의 완성은<br><span style="color: var(--neon);">하이스타 블로그</span>에서
-        </h2>
-        <p style="color: #d0d0d0; margin-bottom: 15px; font-size: 1.2rem; line-height: 1.6;">
-            카나프테라퓨틱스의 전체 파이프라인과<br>더 깊은 분석 인사이트를<br>지금 바로 확인하세요.
-        </p>
-        <a href="https://blog.naver.com/jin0oo" class="cta-btn" target="_blank">하이스타 블로그 바로가기 ➔</a>
-        <div class="bottom-bar" style="background: transparent; flex-direction: column; justify-content: flex-end; padding-bottom: 30px;">
-            <div style="font-size: 0.85rem; color: rgba(255,255,255,0.4); text-align: center; margin-bottom: 15px;">본 콘텐츠는 정보 제공 목적이며<br>특정 종목의 매수/매도를 추천하지 않습니다.</div>
-            <div class="page-indicator" style="color: rgba(255,255,255,0.6);">06 / 06</div>
-        </div>
-    </div>
-
 </div>
 
 <script>
+    // 🚨 1. 로고 삽입 로직
     const logoUrl = 'https://cdn.jsdelivr.net/gh/highstar24/logo@main/logo_png.png';
-    // 🚨 모든 카드(1~6페이지)에 일관된 규격의 로고 삽입
-    document.querySelectorAll('.card').forEach((card) => {
+    const container = document.getElementById('slider');
+    let cards = Array.from(container.children);
+
+    // 오리지널 카드에 로고 삽입
+    cards.forEach((card) => {
         const img = document.createElement('img'); 
         img.src = logoUrl; 
         img.className = 'logo'; 
         card.appendChild(img); 
     });
 
-    const container = document.getElementById('slider');
-    let currentIndex = 0;
-    const totalCards = 6;
+    // 🚨 2. 자연스러운 뫼비우스 띠(Infinite Loop)를 위한 클론(복제) 생성
+    // 6번 뒤에 1번을 붙이고, 1번 앞에 6번을 붙입니다.
+    const firstCardClone = cards[0].cloneNode(true);
+    const lastCardClone = cards[cards.length - 1].cloneNode(true);
+
+    container.appendChild(firstCardClone);       // 맨 뒤에 1번 복제본 추가
+    container.insertBefore(lastCardClone, cards[0]); // 맨 앞에 6번 복제본 추가
+
+    // 상태 변수 재설정 (진짜 1번 페이지는 이제 인덱스 1이 됩니다)
+    const totalOriginalCards = cards.length;
+    let currentIndex = 1; 
     let startX = 0;
     let currentX = 0;
     let isDragging = false;
 
-    // 슬라이드 이동 함수
-    function updateTransform() { 
+    // 시작할 때 진짜 1번 페이지(인덱스 1)를 보여주기 위해 위치 조정
+    container.style.transform = `translateX(-100vw)`;
+
+    // 🚨 3. 애니메이션 이동 함수
+    function updateTransform(animate = true) { 
+        if (animate) {
+            container.style.transition = 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
+        } else {
+            container.style.transition = 'none'; // 몰래 이동할 때는 애니메이션 끄기
+        }
         container.style.transform = `translateX(-${currentIndex * 100}vw)`; 
     }
 
+    // 🚨 4. 트랜지션(넘어가는 애니메이션)이 끝났을 때 눈속임 처리
+    container.addEventListener('transitionend', () => {
+        // 맨 뒤에 있는 가짜 1번(클론)에 도달했다면?
+        if (currentIndex === totalOriginalCards + 1) {
+            currentIndex = 1; // 진짜 1번으로 몰래 위치 변경
+            updateTransform(false); // 애니메이션 없이 쓱!
+        }
+        // 맨 앞에 있는 가짜 6번(클론)에 도달했다면?
+        else if (currentIndex === 0) {
+            currentIndex = totalOriginalCards; // 진짜 6번으로 몰래 위치 변경
+            updateTransform(false); // 애니메이션 없이 쓱!
+        }
+    });
+
+    // 🚨 5. 터치 이벤트 로직
     container.addEventListener('touchstart', (e) => {
         if(e.target.closest('.content-section')) {
             startX = e.touches[0].clientX;
@@ -246,24 +283,11 @@
 
         const diffX = startX - (currentX || e.changedTouches[0].clientX);
 
-        // 🚨 3. 마법의 무한 루프(Loop) 로직 (끝나면 처음으로)
         if (diffX > 50) { 
-            // 오른쪽으로 스와이프 (다음 페이지)
-            if (currentIndex < totalCards - 1) {
-                currentIndex++; 
-            } else {
-                // 마지막 페이지에서 넘기면 첫 페이지로!
-                currentIndex = 0; 
-            }
+            currentIndex++; 
             updateTransform(); 
         } else if (diffX < -50) { 
-            // 왼쪽으로 스와이프 (이전 페이지)
-            if (currentIndex > 0) {
-                currentIndex--; 
-            } else {
-                // 첫 페이지에서 왼쪽으로 당기면 마지막 페이지로!
-                currentIndex = totalCards - 1;
-            }
+            currentIndex--; 
             updateTransform(); 
         }
 
