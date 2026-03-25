@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>카나프테라퓨틱스 카드뉴스 (가로형)</title>
+<style>
+@font-face {
+    font-family: 'Paperlogy';
+    src: url('https://cdn.jsdelivr.net/gh/highstar24/fonts@main/Paperlogy-Regular.woff2') format('woff2');
+}
+:root {
+  --purple: #5D5491; --lilac: #D2C7FF; --dark: #2E2A50; --neon: #E1FB62; --yellow: #FFD230;
+}
+body {
+  font-family: 'Paperlogy', sans-serif;
+  margin: 0; padding: 0;
+  background-color: var(--dark);
+  color: white;
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+.card {
+  min-width: 100vw;
+  height: 100vh;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+  background: var(--purple);
+  border-right: 2px solid var(--dark);
+  text-align: center;
+}
+.logo { width: 120px; margin-bottom: 20px; }
+h1 { color: var(--neon); margin-bottom: 10px; font-size: 2.5rem; }
+h2 { color: var(--yellow); margin-bottom: 20px; font-size: 1.8rem; }
+p { font-size: 1.2rem; line-height: 1.6; color: var(--lilac); }
+</style>
+</head>
+<body>
+  <div class="card">
+    <img src="https://cdn.jsdelivr.net/gh/highstar24/logo@main/logo_png.png" class="logo" alt="Logo">
+    <h1>카나프테라퓨틱스 상장</h1>
+    <h2>상장 첫날 153% 급등!</h2>
+    <p>공모가 20,000원에서 50,600원으로 마감하며<br>성공적인 코스닥 데뷔를 마쳤습니다.</p>
+  </div>
+  <div class="card">
+    <img src="https://cdn.jsdelivr.net/gh/highstar24/logo@main/logo_png.png" class="logo" alt="Logo">
+    <h1>핵심 투자 포인트</h1>
+    <h2>이중항체, ADC 등 7개 파이프라인</h2>
+    <p>인간 유전체 데이터 분석 기반의<br>신약 개발 플랫폼으로 경쟁력을 확보했습니다.</p>
+  </div>
+  <div class="card">
+    <img src="https://cdn.jsdelivr.net/gh/highstar24/logo@main/logo_png.png" class="logo" alt="Logo">
+    <h1>향후 전망</h1>
+    <h2>2028년 흑자 전환 목표</h2>
+    <p>매년 1건 이상의 임상 진입 및 기술이전 성과로<br>글로벌 혁신 신약 기업으로 도약합니다.</p>
+  </div>
+</body>
+</html>
