@@ -1,251 +1,259 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>카나프테라퓨틱스 심층 카드뉴스</title>
-<style>
-@font-face {
-    font-family: 'Paperlogy';
-    src: url('https://cdn.jsdelivr.net/gh/highstar24/fonts@main/Paperlogy-Regular.woff2') format('woff2');
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>카나프테라퓨틱스 카드뉴스</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
 
-:root {
-  /* 팝아트 & 비비드 팔레트 유지 */
-  --bg-1: #FF9B54; --text-1: #4A2B82; --box-bg-1: rgba(255, 255, 255, 0.2);
-  --bg-2: #4A72C9; --text-2: #C5E98B; --box-bg-2: rgba(0, 0, 0, 0.2);
-  --bg-3: #C5E98B; --text-3: #4A6BC6; --box-bg-3: rgba(255, 255, 255, 0.4);
-  --bg-4: #9A5DE2; --text-4: #FF9B54; --box-bg-4: rgba(0, 0, 0, 0.2);
-  --bg-5: #2E2A50; --text-5: #E1FB62; --box-bg-5: rgba(255, 255, 255, 0.1);
-  --white: #FFFFFF;
-  --dark: #222222;
-}
+        /* 팝아트 색상 팔레트 유지 + 리가켐 레이아웃 적용 */
+        :root { 
+            --orange: #FF9B54; 
+            --purple: #8B5FDF; 
+            --blue: #4A72C9; 
+            --green: #B3E879; 
+            --dark: #2E2A50; 
+            --neon: #E1FB62;
+            --white: #FFFFFF;
+        }
 
-body {
-  font-family: 'Paperlogy', sans-serif;
-  margin: 0; padding: 0;
-  background-color: #111;
-  display: flex;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-}
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Noto Sans KR', sans-serif; word-break: keep-all; }
+        body, html { width: 100vw; height: 100vh; overflow: hidden; background-color: var(--dark); touch-action: none; }
+        .carousel-container { display: flex; width: 600vw; height: 100vh; transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
 
-body::-webkit-scrollbar { display: none; }
-body { -ms-overflow-style: none; scrollbar-width: none; }
+        /* 카드 기본 레이아웃 */
+        .card { width: 100vw; height: 100vh; position: relative; display: flex; flex-direction: column; padding: 0; }
+        .header-section { padding: 40px 30px 20px; display: flex; flex-direction: column; position: relative; z-index: 2; height: 180px; }
 
-.card {
-  flex: 0 0 100vw;
-  height: 100vh;
-  scroll-snap-align: start;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 8vw 6vw;
-  box-sizing: border-box;
-  position: relative;
-}
+        /* 오버플로우 스크롤 콘텐츠 영역 */
+        .content-section { flex: 1; border-radius: 30px 30px 0 0; padding: 35px 25px 90px; overflow-y: auto; display: flex; flex-direction: column; gap: 18px; touch-action: pan-y; }
 
-/* 색상 테마 적용 */
-.card-1 { background-color: var(--bg-1); color: var(--text-1); }
-.card-2 { background-color: var(--bg-2); color: var(--text-2); }
-.card-3 { background-color: var(--bg-3); color: var(--text-3); }
-.card-4 { background-color: var(--bg-4); color: var(--text-4); }
-.card-5 { background-color: var(--bg-5); color: var(--text-5); }
+        .card.cover, .card.cta { background: var(--dark); justify-content: center; align-items: center; padding: 40px; text-align: center; }
 
-.card-1 p.desc { color: var(--dark); }
-.card-2 p.desc { color: var(--white); }
-.card-3 p.desc { color: var(--dark); }
-.card-4 p.desc { color: var(--white); }
-.card-5 p.desc { color: #DDDDDD; }
+        /* 테마별 색상 적용 */
+        /* Page 1 (Cover): Dark */
+        /* Page 2: Orange Header / Purple Content */
+        .card-2 { background: var(--orange); }
+        .card-2 .content-section { background: var(--purple); }
+        /* Page 3: Blue Header / Green Content */
+        .card-3 { background: var(--blue); }
+        .card-3 .content-section { background: var(--green); }
+        /* Page 4: Purple Header / Orange Content */
+        .card-4 { background: var(--purple); }
+        .card-4 .content-section { background: var(--orange); }
+        /* Page 5: Green Header / Blue Content */
+        .card-5 { background: var(--green); }
+        .card-5 .content-section { background: var(--blue); }
 
-.logo { 
-  width: 50px; 
-  position: absolute;
-  top: 25px;
-  right: 25px;
-  opacity: 0.9;
-}
+        .logo { position: absolute; top: 30px; right: 25px; width: 80px; z-index: 10; pointer-events: none; }
+        .tag { display: inline-block; background: rgba(255,255,255,0.1); color: var(--neon); padding: 8px 18px; border-radius: 20px; font-weight: 800; font-size: 1rem; margin-bottom: 20px; border: 1px solid rgba(225,251,98,0.3); }
 
-.category {
-  display: inline-block;
-  font-size: 0.9rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  margin-bottom: 15px;
-  border: 2px solid currentColor;
-  padding: 4px 12px;
-  border-radius: 20px;
-}
+        .page-title { color: white; font-size: 1.8rem; font-weight: 800; line-height: 1.3; }
+        .card-5 .page-title { color: var(--dark); } /* 그린 배경일때 글자색 다크 */
 
-h1 { 
-  margin: 0 0 15px 0; 
-  font-size: 2.2rem; 
-  line-height: 1.3;
-  word-break: keep-all;
-}
+        .page-num-header { font-size: 2.5rem; font-weight: 900; color: rgba(255,255,255,0.3); position: absolute; left: 30px; top: 35px; z-index: 1;}
+        .card-5 .page-num-header { color: rgba(0,0,0,0.1); }
 
-.highlight {
-  background-color: currentColor;
-  padding: 0 8px;
-}
-.card-1 .highlight { color: var(--white); background-color: var(--text-1); }
-.card-2 .highlight { color: var(--bg-2); background-color: var(--text-2); }
-.card-3 .highlight { color: var(--bg-3); background-color: var(--text-3); }
-.card-4 .highlight { color: var(--bg-4); background-color: var(--text-4); }
-.card-5 .highlight { color: var(--bg-5); background-color: var(--text-5); }
+        .info-card { background: white; border-radius: 16px; padding: 25px 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; }
+        .info-card.dark { background: var(--dark); color: white; }
 
-p.desc { 
-  font-size: 1.1rem; 
-  line-height: 1.6; 
-  margin: 0 0 20px 0;
-  font-weight: 500;
-  word-break: keep-all;
-}
+        .info-card h3 { font-size: 1.25rem; font-weight: 800; margin-bottom: 8px; color: var(--dark); line-height: 1.3; }
+        .info-card.dark h3 { color: white; }
 
-/* 정보 밀도를 높이기 위한 디테일 박스 */
-.detail-box {
-  padding: 20px;
-  border-radius: 12px;
-  margin-top: 10px;
-  font-size: 1.05rem;
-  line-height: 1.6;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-}
+        .info-card p { font-size: 1.05rem; line-height: 1.5; color: #444; font-weight: 500; }
+        .info-card.dark p { color: #d0d0d0; }
 
-.card-1 .detail-box { background-color: var(--box-bg-1); color: var(--dark); border: 1px solid rgba(0,0,0,0.1); }
-.card-2 .detail-box { background-color: var(--box-bg-2); color: var(--white); }
-.card-3 .detail-box { background-color: var(--box-bg-3); color: var(--dark); border: 1px solid rgba(0,0,0,0.1); }
-.card-4 .detail-box { background-color: var(--box-bg-4); color: var(--white); }
-.card-5 .detail-box { background-color: var(--box-bg-5); color: #FFF; border: 1px solid rgba(255,255,255,0.2); }
+        .info-badge { display: inline-block; font-size: 0.9rem; font-weight: 800; color: var(--blue); margin-bottom: 8px; }
+        .info-card.dark .info-badge { color: var(--neon); }
 
-.detail-box ul {
-  margin: 0;
-  padding-left: 20px;
-}
-.detail-box li {
-  margin-bottom: 8px;
-}
-.detail-box li:last-child {
-  margin-bottom: 0;
-}
+        .cover-title { font-size: 3.2rem; font-weight: 900; color: var(--neon); line-height: 1.2; margin-bottom: 25px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        .cover-sub { font-size: 1.25rem; color: white; line-height: 1.6; margin-bottom: 40px; font-weight: 600; }
 
-.detail-box strong {
-  display: block;
-  margin-bottom: 5px;
-  font-size: 1.15rem;
-}
+        .cta-btn { display: inline-flex; align-items: center; justify-content: center; background: var(--neon); color: var(--dark); text-decoration: none; padding: 20px 30px; border-radius: 50px; font-weight: 900; font-size: 1.3rem; margin-top: 30px; box-shadow: 0 6px 20px rgba(225, 251, 98, 0.3); width: 100%; max-width: 320px; }
 
-.swipe-hint {
-  position: absolute;
-  bottom: 25px;
-  right: 25px;
-  font-size: 0.9rem;
-  opacity: 0.7;
-  font-weight: bold;
-}
-</style>
+        .bottom-bar { position: absolute; bottom: 0; left: 0; width: 100%; height: 60px; background: rgba(46, 42, 80, 0.95); display: flex; justify-content: space-between; align-items: center; padding: 0 25px; z-index: 10; pointer-events: none;}
+        .bottom-text { font-size: 0.9rem; color: var(--neon); font-weight: 700; }
+        .page-indicator { font-weight: 800; font-size: 1.1rem; color: white; }
+    </style>
 </head>
 <body>
+<div class="carousel-container" id="slider">
 
-  <!-- Card 1 -->
-  <div class="card card-1">
-    <img src="https://cdn.jsdelivr.net/gh/highstar24/logo@main/logo_png.png" class="logo" alt="Logo">
-    <div>
-      <div class="category">ISSUE CHECK</div>
-      <h1>카나프테라퓨틱스<br><span class="highlight">주가 반토막?</span> 현실 점검</h1>
-      <p class="desc">상장 첫날 6.9만 원까지 치솟았던 주가가 현재 4만 원대 초반으로 하락하며 주주들의 우려가 커지고 있습니다.</p>
-
-      <div class="detail-box">
-        <strong>📊 2025년 재무 팩트체크</strong>
-        <ul>
-          <li><b>매출액:</b> 약 55억 원</li>
-          <li><b>영업손실:</b> 약 355억 원 (적자폭 확대)</li>
-          <li>바이오텍 특성상 R&D 비용 투입으로 인한 단기 적자는 불가피합니다.</li>
-          <li>막연한 테마성 기대감보다는 <b>'파이프라인의 실체'</b>에 집중해야 할 때입니다.</li>
-        </ul>
-      </div>
+    <!-- 1페이지 (Cover) -->
+    <div class="card cover">
+        <div class="tag">KOSDAQ 신규 상장</div>
+        <h1 class="cover-title">카나프테라퓨틱스</h1>
+        <p class="cover-sub">주가 하락의 진실과<br>2025년 핵심 모멘텀 분석</p>
+        <div class="info-card dark" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); max-width: 320px;">
+            <h3 style="color:var(--neon); text-align:center; font-size: 1.1rem; margin-bottom: 5px;">현재 주가 흐름</h3>
+            <p style="text-align:center; font-size: 1.3rem; font-weight: 900; color: white;">최고 6.9만 원 ➔ 4만 원대 하락</p>
+        </div>
+        <div class="bottom-bar" style="background: transparent;">
+            <div class="page-indicator" style="width: 100%; text-align: right;">01 / 06</div>
+        </div>
     </div>
-    <div class="swipe-hint">Swipe ➔</div>
-  </div>
 
-  <!-- Card 2 -->
-  <div class="card card-2">
-    <img src="https://cdn.jsdelivr.net/gh/highstar24/logo@main/logo_png.png" class="logo" alt="Logo">
-    <div>
-      <div class="category">MOMENTUM 01</div>
-      <h1>올해 가장 강력한 단기 모멘텀<br><span class="highlight">KNP-502</span></h1>
-      <p class="desc">가장 가시적인 성과가 기대되는 '종양 미세환경 개선' 면역항암제 파이프라인입니다.</p>
-
-      <div class="detail-box">
-        <strong>🎯 FDA 임상 진입 스케줄</strong>
-        <ul>
-          <li><b>2025년 5월:</b> 미국 FDA 임상 1상 IND(임상시험계획) 신청 예정</li>
-          <li><b>2025년 11월:</b> 추가 1상 IND 신청 계획</li>
-          <li>해당 임상 진입 승인 여부가 올해 주가 반등을 이끌 핵심 트리거입니다.</li>
-        </ul>
-      </div>
+    <!-- 2페이지 (재무/현실 점검) -->
+    <div class="card card-2">
+        <div class="header-section">
+            <span class="page-num-header">02</span>
+            <div style="padding-left: 60px;"><h2 class="page-title">고점 대비 반토막<br>냉혹한 현실 점검</h2></div>
+        </div>
+        <div class="content-section">
+            <div class="info-card">
+                <span class="info-badge">2025년 실적 팩트체크</span>
+                <h3>적자 폭은 확대 중</h3>
+                <p>매출액 약 55억 원, 영업손실 약 355억 원. 신약 개발에 따른 막대한 R&D 비용 투입으로 단기 적자는 불가피한 바이오 기업의 숙명입니다.</p>
+            </div>
+            <div class="info-card dark">
+                <span class="info-badge" style="color:var(--neon)">투자 포인트</span>
+                <h3>실체 있는 성과가 필요</h3>
+                <p>단순 상장 테마의 거품이 걷히는 중입니다. 막연한 기대감보다는 '파이프라인이 창출할 가치'에 주목해야 합니다.</p>
+            </div>
+        </div>
+        <div class="bottom-bar"><div class="bottom-text">냉정한 기업 분석</div><div class="page-indicator">02 / 06</div></div>
     </div>
-    <div class="swipe-hint">Swipe ➔</div>
-  </div>
 
-  <!-- Card 3 -->
-  <div class="card card-3">
-    <img src="https://cdn.jsdelivr.net/gh/highstar24/logo@main/logo_png.png" class="logo" alt="Logo">
-    <div>
-      <div class="category">MOMENTUM 02</div>
-      <h1>기술이전의 필수 관문<br><span class="highlight">글로벌 학회 연쇄 발표</span></h1>
-      <p class="desc">글로벌 파트너링을 위한 핵심 데이터가 올해 4~5월 굵직한 국제 학회에서 연이어 공개됩니다.</p>
-
-      <div class="detail-box">
-        <strong>📅 2025 상반기 학회 일정</strong>
-        <ul>
-          <li><b>[4월 AACR] KNP-101 (이중항체)</b><br>전신 독성을 획기적으로 줄인 차세대 면역항암제 효능 데이터 발표</li>
-          <li><b>[5월 ARVO] KNP-301 (안과질환)</b><br>습성 황반변성 등 이중 표적(C3b, VEGF) 차단제의 전임상 효능 입증</li>
-        </ul>
-      </div>
+    <!-- 3페이지 (모멘텀 1: KNP-502) -->
+    <div class="card card-3">
+        <div class="header-section">
+            <span class="page-num-header">03</span>
+            <div style="padding-left: 60px;"><h2 class="page-title">올해 강력한 모멘텀<br>KNP-502 임상</h2></div>
+        </div>
+        <div class="content-section">
+            <div class="info-card">
+                <span class="info-badge">종양 미세환경 개선</span>
+                <h3>5월 FDA 임상 1상 진입</h3>
+                <p>가장 가시적인 성과가 기대되는 면역항암제 파이프라인입니다. 당장 올해 5월 미국 FDA에 임상시험계획(IND)을 신청합니다.</p>
+            </div>
+            <div class="info-card dark" style="background:var(--dark); padding: 25px 20px;">
+                <h3 style="color:var(--neon); font-size:1.15rem;">🔥 추가 임상 모멘텀</h3>
+                <p style="color:#d0d0d0;">이어 11월에도 추가 1상 IND 신청이 예고되어 있어, 임상 승인 여부가 주가 반등의 최우선 트리거입니다.</p>
+            </div>
+        </div>
+        <div class="bottom-bar"><div class="bottom-text">가시적인 파이프라인</div><div class="page-indicator">03 / 06</div></div>
     </div>
-    <div class="swipe-hint">Swipe ➔</div>
-  </div>
 
-  <!-- Card 4 -->
-  <div class="card card-4">
-    <img src="https://cdn.jsdelivr.net/gh/highstar24/logo@main/logo_png.png" class="logo" alt="Logo">
-    <div>
-      <div class="category">MOMENTUM 03</div>
-      <h1>빅파마가 군침 흘리는<br><span class="highlight">차세대 ADC KNP-701</span></h1>
-      <p class="desc">현재 제약바이오 업계의 최고 화두인 ADC(항체-약물접합체) 파이프라인을 독자 개발 중입니다.</p>
-
-      <div class="detail-box">
-        <strong>💊 KNP-701 핵심 경쟁력</strong>
-        <ul>
-          <li><b>이중항체 기반:</b> cMET과 EGFR을 동시에 타겟팅</li>
-          <li>기존 표적항암제의 '내성'을 극복할 수 있도록 설계됨</li>
-          <li>향후 글로벌 라이선스 아웃 협상에서 가장 폭발력을 가질 '히든카드'</li>
-        </ul>
-      </div>
+    <!-- 4페이지 (모멘텀 2: 글로벌 학회) -->
+    <div class="card card-4">
+        <div class="header-section">
+            <span class="page-num-header">04</span>
+            <div style="padding-left: 60px;"><h2 class="page-title">기술이전의 관문<br>글로벌 학회 출격</h2></div>
+        </div>
+        <div class="content-section">
+            <div class="info-card">
+                <span class="info-badge">4월 AACR (미국암연구학회)</span>
+                <h3>차세대 면역항암제 KNP-101</h3>
+                <p>에스티팜과 공동 연구 중인 이중항체. 기존 IL-12의 전신 독성을 획기적으로 줄인 핵심 데이터를 공개합니다.</p>
+            </div>
+            <div class="info-card" style="background:#fff3cd; border:none;">
+                <h3 style="color:#856404; font-size:1.15rem;">💡 5월 ARVO (시과학안과학회)</h3>
+                <p style="color:#664d03;">안과 질환 치료제 KNP-301 발표. 습성 황반변성을 타겟하는 이중 표적(C3b, VEGF) 차단제의 효능을 입증합니다.</p>
+            </div>
+        </div>
+        <div class="bottom-bar"><div class="bottom-text">상반기 학회 릴레이</div><div class="page-indicator">04 / 06</div></div>
     </div>
-    <div class="swipe-hint">Swipe ➔</div>
-  </div>
 
-  <!-- Card 5 -->
-  <div class="card card-5">
-    <img src="https://cdn.jsdelivr.net/gh/highstar24/logo@main/logo_png.png" class="logo" alt="Logo">
-    <div>
-      <div class="category" style="color: var(--text-5); border-color: var(--text-5);">INVESTMENT INSIGHT</div>
-      <h1>수급보다 중요한 건<br><span class="highlight">마일스톤 달성 여부</span></h1>
-      <p class="desc">현재 주가는 상장 거품이 걷히고 본질 가치를 찾아가는 진통 과정입니다.</p>
-
-      <div class="detail-box">
-        <strong>💡 투자 체크포인트</strong>
-        <ul>
-          <li>2028년 흑자 전환 로드맵의 실현 가능성</li>
-          <li>당장 <b>올해 4~5월 학회 발표 및 5월 FDA IND 신청</b> 성공적 완수 여부</li>
-          <li>매일의 수급 변동성보다 '예고된 일정'의 이행을 냉정하게 관찰하세요.</li>
-        </ul>
-      </div>
+    <!-- 5페이지 (모멘텀 3: ADC KNP-701) -->
+    <div class="card card-5">
+        <div class="header-section">
+            <span class="page-num-header">05</span>
+            <div style="padding-left: 60px;"><h2 class="page-title">빅파마가 주목하는<br>차세대 ADC 파이프라인</h2></div>
+        </div>
+        <div class="content-section">
+            <div class="info-card dark" style="background:var(--dark); text-align:center; padding: 30px 20px;">
+                <p style="color:#d0d0d0; margin-bottom: 10px;">cMET x EGFR 이중항체</p>
+                <h3 style="font-size: 1.8rem; color:var(--neon);">KNP-701의 폭발력</h3>
+            </div>
+            <div class="info-card">
+                <ul style="list-style:none; padding:0; font-size:1.1rem; line-height:1.8;">
+                    <li style="border-bottom:1px solid #eee; padding:10px 0;"><b>🎯 이중 타겟팅:</b> cMET & EGFR 동시 공략</li>
+                    <li style="border-bottom:1px solid #eee; padding:10px 0;"><b>🛡️ 내성 극복:</b> 기존 표적항암제 한계 돌파</li>
+                    <li style="padding:10px 0;"><b>🤝 기술이전 기대:</b> 향후 L/O 핵심 카드</li>
+                </ul>
+            </div>
+        </div>
+        <div class="bottom-bar"><div class="bottom-text">가장 뜨거운 ADC 섹터</div><div class="page-indicator">05 / 06</div></div>
     </div>
-  </div>
 
+    <!-- 6페이지 (CTA) -->
+    <div class="card cta">
+        <h2 style="color: white; margin-bottom: 25px; font-size: 2.2rem; line-height: 1.4; font-weight: 900;">
+            투자의 완성은<br><span style="color: var(--neon);">하이스타 블로그</span>에서
+        </h2>
+        <p style="color: #d0d0d0; margin-bottom: 15px; font-size: 1.2rem; line-height: 1.6;">
+            카나프테라퓨틱스의 전체 파이프라인과<br>더 깊은 분석 인사이트를<br>지금 바로 확인하세요.
+        </p>
+        <a href="https://blog.naver.com/jin0oo" class="cta-btn" target="_blank">하이스타 블로그 바로가기 ➔</a>
+        <div class="bottom-bar" style="background: transparent; flex-direction: column; justify-content: flex-end; padding-bottom: 30px;">
+            <div style="font-size: 0.85rem; color: rgba(255,255,255,0.4); text-align: center; margin-bottom: 15px;">본 콘텐츠는 정보 제공 목적이며<br>특정 종목의 매수/매도를 추천하지 않습니다.</div>
+            <div class="page-indicator" style="color: rgba(255,255,255,0.6);">06 / 06</div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    const logoUrl = 'https://cdn.jsdelivr.net/gh/highstar24/logo@main/logo_png.png';
+    document.querySelectorAll('.card').forEach((card, index) => {
+        if(index !== 5 && index !== 0) { 
+            const img = document.createElement('img'); 
+            img.src = logoUrl; 
+            img.className = 'logo'; 
+            card.appendChild(img); 
+        } else if (index === 0) {
+            // 커버에는 로고를 넣거나 생략
+            const img = document.createElement('img'); 
+            img.src = logoUrl; 
+            img.className = 'logo'; 
+            card.appendChild(img); 
+        }
+    });
+
+    const container = document.getElementById('slider');
+    let currentIndex = 0;
+    const totalCards = 6;
+    let startX = 0;
+    let currentX = 0;
+    let isDragging = false;
+
+    function updateTransform() { 
+        container.style.transform = `translateX(-${currentIndex * 100}vw)`; 
+    }
+
+    container.addEventListener('touchstart', (e) => {
+        if(e.target.closest('.content-section')) {
+            startX = e.touches[0].clientX;
+            isDragging = true;
+            return;
+        }
+        startX = e.touches[0].clientX;
+        isDragging = true;
+    }, { passive: true });
+
+    container.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        currentX = e.touches[0].clientX;
+    }, { passive: true });
+
+    container.addEventListener('touchend', (e) => {
+        if (!isDragging) return;
+        if (e.target.closest('a')) return;
+
+        const diffX = startX - (currentX || e.changedTouches[0].clientX);
+
+        if (diffX > 50 && currentIndex < totalCards - 1) { 
+            currentIndex++; 
+            updateTransform(); 
+        } else if (diffX < -50 && currentIndex > 0) { 
+            currentIndex--; 
+            updateTransform(); 
+        }
+
+        isDragging = false;
+        currentX = 0;
+    });
+</script>
 </body>
 </html>
