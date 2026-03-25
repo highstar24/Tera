@@ -3,11 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- 카톡 공유시 이미지가 뜨게 하는 마법의 태그 (Open Graph) -->
     <title>카나프테라퓨틱스 카드뉴스</title>
+    <meta property="og:title" content="카나프테라퓨틱스 카드뉴스">
+    <meta property="og:description" content="2028년 흑자전환을 향한 핵심 파이프라인 심층 분석">
+    <meta property="og:image" content="https://cdn.jsdelivr.net/gh/highstar24/logo@main/logo_png.png">
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
 
-        /* 팝아트 색상 팔레트 유지 + 리가켐 레이아웃 적용 */
         :root { 
             --orange: #FF9B54; 
             --purple: #8B5FDF; 
@@ -16,41 +20,38 @@
             --dark: #2E2A50; 
             --neon: #E1FB62;
             --white: #FFFFFF;
+            --yellow: #FFD230;
+            --lilac: #D2C7FF;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Noto Sans KR', sans-serif; word-break: keep-all; }
         body, html { width: 100vw; height: 100vh; overflow: hidden; background-color: var(--dark); touch-action: none; }
         .carousel-container { display: flex; width: 600vw; height: 100vh; transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
 
-        /* 카드 기본 레이아웃 */
         .card { width: 100vw; height: 100vh; position: relative; display: flex; flex-direction: column; padding: 0; }
         .header-section { padding: 40px 30px 20px; display: flex; flex-direction: column; position: relative; z-index: 2; height: 180px; }
 
-        /* 오버플로우 스크롤 콘텐츠 영역 */
         .content-section { flex: 1; border-radius: 30px 30px 0 0; padding: 35px 25px 90px; overflow-y: auto; display: flex; flex-direction: column; gap: 18px; touch-action: pan-y; }
 
         .card.cover, .card.cta { background: var(--dark); justify-content: center; align-items: center; padding: 40px; text-align: center; }
 
-        /* 테마별 색상 적용 */
-        /* Page 1 (Cover): Dark */
-        /* Page 2: Orange Header / Purple Content */
         .card-2 { background: var(--orange); }
         .card-2 .content-section { background: var(--purple); }
-        /* Page 3: Blue Header / Green Content */
         .card-3 { background: var(--blue); }
         .card-3 .content-section { background: var(--green); }
-        /* Page 4: Purple Header / Orange Content */
         .card-4 { background: var(--purple); }
         .card-4 .content-section { background: var(--orange); }
-        /* Page 5: Green Header / Blue Content */
         .card-5 { background: var(--green); }
         .card-5 .content-section { background: var(--blue); }
 
-        .logo { position: absolute; top: 30px; right: 25px; width: 80px; z-index: 10; pointer-events: none; }
+        /* 로고 모든 페이지 통일, 크기 10% 축소(65px -> 58px), 우측+상단으로 이동 */
+        .logo { position: absolute; top: 12px; right: 12px; width: 58px; z-index: 10; pointer-events: none; }
+
         .tag { display: inline-block; background: rgba(255,255,255,0.1); color: var(--neon); padding: 8px 18px; border-radius: 20px; font-weight: 800; font-size: 1rem; margin-bottom: 20px; border: 1px solid rgba(225,251,98,0.3); }
 
-        .page-title { color: white; font-size: 1.8rem; font-weight: 800; line-height: 1.3; }
-        .card-5 .page-title { color: var(--dark); } /* 그린 배경일때 글자색 다크 */
+        /* 제목이 우측 로고와 겹치지 않도록 방어막(padding-right) 설정 */
+        .page-title { color: white; font-size: 1.8rem; font-weight: 800; line-height: 1.3; padding-right: 50px; }
+        .card-5 .page-title { color: var(--dark); } 
 
         .page-num-header { font-size: 2.5rem; font-weight: 900; color: rgba(255,255,255,0.3); position: absolute; left: 30px; top: 35px; z-index: 1;}
         .card-5 .page-num-header { color: rgba(0,0,0,0.1); }
@@ -67,7 +68,7 @@
         .info-badge { display: inline-block; font-size: 0.9rem; font-weight: 800; color: var(--blue); margin-bottom: 8px; }
         .info-card.dark .info-badge { color: var(--neon); }
 
-        .cover-title { font-size: 3.2rem; font-weight: 900; color: var(--neon); line-height: 1.2; margin-bottom: 25px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        .cover-title { font-size: 3.2rem; font-weight: 900; color: var(--neon); line-height: 1.2; margin-bottom: 25px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); padding-right: 0;}
         .cover-sub { font-size: 1.25rem; color: white; line-height: 1.6; margin-bottom: 40px; font-weight: 600; }
 
         .cta-btn { display: inline-flex; align-items: center; justify-content: center; background: var(--neon); color: var(--dark); text-decoration: none; padding: 20px 30px; border-radius: 50px; font-weight: 900; font-size: 1.3rem; margin-top: 30px; box-shadow: 0 6px 20px rgba(225, 251, 98, 0.3); width: 100%; max-width: 320px; }
@@ -80,39 +81,39 @@
 <body>
 <div class="carousel-container" id="slider">
 
-    <!-- 1페이지 (Cover) -->
+    <!-- 1페이지 (Cover - 긍정적 모멘텀으로 전면 수정) -->
     <div class="card cover">
-        <div class="tag">KOSDAQ 신규 상장</div>
-        <h1 class="cover-title">카나프테라퓨틱스</h1>
-        <p class="cover-sub">주가 하락의 진실과<br>2025년 핵심 모멘텀 분석</p>
+        <div class="tag">KOSDAQ 혁신 신약</div>
+        <h1 class="cover-title">카나프<br>테라퓨틱스</h1>
+        <p class="cover-sub">2028년 흑자전환을 향한<br>핵심 파이프라인 심층 분석</p>
         <div class="info-card dark" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); max-width: 320px;">
-            <h3 style="color:var(--neon); text-align:center; font-size: 1.1rem; margin-bottom: 5px;">현재 주가 흐름</h3>
-            <p style="text-align:center; font-size: 1.3rem; font-weight: 900; color: white;">최고 6.9만 원 ➔ 4만 원대 하락</p>
+            <h3 style="color:var(--neon); text-align:center; font-size: 1.1rem; margin-bottom: 5px;">글로벌 기술이전 정조준</h3>
+            <p style="text-align:center; font-size: 1.5rem; font-weight: 900; color: white;">7대 핵심 파이프라인</p>
         </div>
         <div class="bottom-bar" style="background: transparent;">
             <div class="page-indicator" style="width: 100%; text-align: right;">01 / 06</div>
         </div>
     </div>
 
-    <!-- 2페이지 (재무/현실 점검) -->
+    <!-- 2페이지 (기술력 점검 - 주가 하락 내용 완전 삭제) -->
     <div class="card card-2">
         <div class="header-section">
             <span class="page-num-header">02</span>
-            <div style="padding-left: 60px;"><h2 class="page-title">고점 대비 반토막<br>냉혹한 현실 점검</h2></div>
+            <div style="padding-left: 60px;"><h2 class="page-title">독자적 발굴 시스템<br>질병 시그니처</h2></div>
         </div>
         <div class="content-section">
             <div class="info-card">
-                <span class="info-badge">2025년 실적 팩트체크</span>
-                <h3>적자 폭은 확대 중</h3>
-                <p>매출액 약 55억 원, 영업손실 약 355억 원. 신약 개발에 따른 막대한 R&D 비용 투입으로 단기 적자는 불가피한 바이오 기업의 숙명입니다.</p>
+                <span class="info-badge">유전체 데이터 분석 기반</span>
+                <h3>인간 유전체 데이터 플랫폼</h3>
+                <p>대규모 데이터를 분석하여 질병과 연관성이 높은 타겟을 도출해 내는 핵심 기술을 보유하고 있습니다. 이를 통해 개발 성공 확률을 획기적으로 높입니다.</p>
             </div>
             <div class="info-card dark">
-                <span class="info-badge" style="color:var(--neon)">투자 포인트</span>
-                <h3>실체 있는 성과가 필요</h3>
-                <p>단순 상장 테마의 거품이 걷히는 중입니다. 막연한 기대감보다는 '파이프라인이 창출할 가치'에 주목해야 합니다.</p>
+                <span class="info-badge" style="color:var(--neon)">파이프라인 경쟁력</span>
+                <h3>이중항체부터 ADC까지</h3>
+                <p>단순한 연구 단계에 머무르지 않고, 최적의 모달리티를 적용해 실제 조기 사업화와 글로벌 기술이전을 적극 추진 중입니다.</p>
             </div>
         </div>
-        <div class="bottom-bar"><div class="bottom-text">냉정한 기업 분석</div><div class="page-indicator">02 / 06</div></div>
+        <div class="bottom-bar"><div class="bottom-text">기술적 해자 구축 완료</div><div class="page-indicator">02 / 06</div></div>
     </div>
 
     <!-- 3페이지 (모멘텀 1: KNP-502) -->
@@ -129,7 +130,7 @@
             </div>
             <div class="info-card dark" style="background:var(--dark); padding: 25px 20px;">
                 <h3 style="color:var(--neon); font-size:1.15rem;">🔥 추가 임상 모멘텀</h3>
-                <p style="color:#d0d0d0;">이어 11월에도 추가 1상 IND 신청이 예고되어 있어, 임상 승인 여부가 주가 반등의 최우선 트리거입니다.</p>
+                <p style="color:#d0d0d0;">이어 11월에도 추가 1상 IND 신청이 예고되어 있어, 성공적인 임상 승인 여부가 기업 가치 상승의 최우선 트리거입니다.</p>
             </div>
         </div>
         <div class="bottom-bar"><div class="bottom-text">가시적인 파이프라인</div><div class="page-indicator">03 / 06</div></div>
@@ -164,7 +165,7 @@
         <div class="content-section">
             <div class="info-card dark" style="background:var(--dark); text-align:center; padding: 30px 20px;">
                 <p style="color:#d0d0d0; margin-bottom: 10px;">cMET x EGFR 이중항체</p>
-                <h3 style="font-size: 1.8rem; color:var(--neon);">KNP-701의 폭발력</h3>
+                <h3 style="font-size: 1.8rem; color:var(--white);">KNP-701의 폭발력</h3>
             </div>
             <div class="info-card">
                 <ul style="list-style:none; padding:0; font-size:1.1rem; line-height:1.8;">
@@ -185,7 +186,7 @@
         <p style="color: #d0d0d0; margin-bottom: 15px; font-size: 1.2rem; line-height: 1.6;">
             카나프테라퓨틱스의 전체 파이프라인과<br>더 깊은 분석 인사이트를<br>지금 바로 확인하세요.
         </p>
-        <a href="https://blog.naver.com/jin0oo" class="cta-btn" target="_blank">하이스타 블로그 바로가기 ➔</a>
+        <a href="https://blog.naver.com/jin0oo" class="cta-btn" target="_blank">블로그 바로가기 ➔</a>
         <div class="bottom-bar" style="background: transparent; flex-direction: column; justify-content: flex-end; padding-bottom: 30px;">
             <div style="font-size: 0.85rem; color: rgba(255,255,255,0.4); text-align: center; margin-bottom: 15px;">본 콘텐츠는 정보 제공 목적이며<br>특정 종목의 매수/매도를 추천하지 않습니다.</div>
             <div class="page-indicator" style="color: rgba(255,255,255,0.6);">06 / 06</div>
@@ -196,19 +197,12 @@
 
 <script>
     const logoUrl = 'https://cdn.jsdelivr.net/gh/highstar24/logo@main/logo_png.png';
-    document.querySelectorAll('.card').forEach((card, index) => {
-        if(index !== 5 && index !== 0) { 
-            const img = document.createElement('img'); 
-            img.src = logoUrl; 
-            img.className = 'logo'; 
-            card.appendChild(img); 
-        } else if (index === 0) {
-            // 커버에는 로고를 넣거나 생략
-            const img = document.createElement('img'); 
-            img.src = logoUrl; 
-            img.className = 'logo'; 
-            card.appendChild(img); 
-        }
+    // 🚨 1번 요청: 모든 페이지(1~6)에 동일한 로고를 일괄 삽입하도록 로직 단순화
+    document.querySelectorAll('.card').forEach((card) => {
+        const img = document.createElement('img'); 
+        img.src = logoUrl; 
+        img.className = 'logo'; 
+        card.appendChild(img); 
     });
 
     const container = document.getElementById('slider');
