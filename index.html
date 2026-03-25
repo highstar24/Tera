@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- 🚨 오픈 그래프 (카톡 공유 썸네일/제목) -->
     <title>카나프테라퓨틱스 카드뉴스(S)</title>
     <meta property="og:title" content="카나프테라퓨틱스 카드뉴스(S)">
-    <meta property="og:description" content="주가 하락의 진실과 2025년 핵심 모멘텀 분석">
+    <meta property="og:description" content="2028년 흑자전환을 향한 핵심 파이프라인 심층 분석">
     <meta property="og:image" content="https://cdn.jsdelivr.net/gh/highstar24/logo@main/logo_png.png">
 
     <style>
@@ -36,7 +37,6 @@
             display: flex; 
             width: 100%; 
             height: 100vh; 
-            /* 자바스크립트에서 제어할 수 있도록 여기서는 기본만 남김 */
             transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); 
         }
 
@@ -55,6 +55,7 @@
         .card-5 { background: var(--green); }
         .card-5 .content-section { background: var(--blue); }
 
+        /* 로고 및 방어막 유지 */
         .logo { position: absolute; top: 25px; right: 15px; width: 58px; z-index: 10; pointer-events: none; }
         .tag { display: inline-block; background: rgba(255,255,255,0.1); color: var(--neon); padding: 8px 18px; border-radius: 20px; font-weight: 800; font-size: 1rem; margin-bottom: 20px; border: 1px solid rgba(225,251,98,0.3); }
         .page-title { color: white; font-size: 1.8rem; font-weight: 800; line-height: 1.3; margin-top: 5px; }
@@ -76,9 +77,7 @@
         .cover-title { font-size: 3.2rem; font-weight: 900; color: var(--neon); line-height: 1.2; margin-bottom: 25px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); padding-right: 0;}
         .cover-sub { font-size: 1.25rem; color: white; line-height: 1.6; margin-bottom: 40px; font-weight: 600; }
 
-        /* 🚨 사용자의 '마지막 버튼 폭 줄이기' 피드백을 마스터 프롬프트로 적용 
-           기존: width: 100%; max-width: 320px; padding: 20px 30px;
-           수정: width: auto; min-width: 220px; max-width: 280px; padding: 16px 28px; font-size: 1.15rem; */
+        /* 🚨 수정된 마지막 버튼 폭 줄이기 */
         .cta-btn { 
             display: inline-flex; 
             align-items: center; 
@@ -107,42 +106,42 @@
 <div class="carousel-wrapper">
     <div class="carousel-container" id="slider">
 
-        <!-- 1페이지 -->
+        <!-- 1페이지 (수정된 긍정 모멘텀 내용) -->
         <div class="card cover">
-            <div class="tag">KOSDAQ 신규 상장</div>
-            <h1 class="cover-title">카나프테라퓨틱스</h1>
-            <p class="cover-sub">주가 하락의 진실과<br>2025년 핵심 모멘텀 분석</p>
+            <div class="tag">KOSDAQ 혁신 신약</div>
+            <h1 class="cover-title">카나프<br>테라퓨틱스</h1>
+            <p class="cover-sub">2028년 흑자전환을 향한<br>핵심 파이프라인 심층 분석</p>
             <div class="info-card dark" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); max-width: 320px;">
-                <h3 style="color:var(--neon); text-align:center; font-size: 1.1rem; margin-bottom: 5px;">현재 주가 흐름</h3>
-                <p style="text-align:center; font-size: 1.3rem; font-weight: 900; color: white;">최고 6.9만 원 ➔ 4만 원대 하락</p>
+                <h3 style="color:var(--neon); text-align:center; font-size: 1.1rem; margin-bottom: 5px;">글로벌 기술이전 정조준</h3>
+                <p style="text-align:center; font-size: 1.5rem; font-weight: 900; color: white;">7대 핵심 파이프라인</p>
             </div>
             <div class="bottom-bar" style="background: transparent;">
                 <div class="page-indicator" style="width: 100%; text-align: right;">01 / 06</div>
             </div>
         </div>
 
-        <!-- 2페이지 -->
+        <!-- 2페이지 (수정된 긍정 모멘텀 내용) -->
         <div class="card card-2">
             <div class="header-section">
                 <span class="page-num-header">02</span>
-                <div style="padding-left: 60px;"><h2 class="page-title">고점 대비 반토막<br>냉혹한 현실 점검</h2></div>
+                <div style="padding-left: 60px;"><h2 class="page-title">독자적 발굴 시스템<br>질병 시그니처</h2></div>
             </div>
             <div class="content-section">
                 <div class="info-card">
-                    <span class="info-badge">2025년 실적 팩트체크</span>
-                    <h3>적자 폭은 확대 중</h3>
-                    <p>매출액 약 55억 원, 영업손실 약 355억 원. 신약 개발에 따른 막대한 R&D 비용 투입으로 단기 적자는 불가피한 바이오 기업의 숙명입니다.</p>
+                    <span class="info-badge">유전체 데이터 분석 기반</span>
+                    <h3>인간 유전체 데이터 플랫폼</h3>
+                    <p>대규모 데이터를 분석하여 질병과 연관성이 높은 타겟을 도출해 내는 핵심 기술을 보유하고 있습니다. 이를 통해 개발 성공 확률을 획기적으로 높입니다.</p>
                 </div>
                 <div class="info-card dark">
-                    <span class="info-badge" style="color:var(--neon)">투자 포인트</span>
-                    <h3>실체 있는 성과가 필요</h3>
-                    <p>단순 상장 테마의 거품이 걷히는 중입니다. 막연한 기대감보다는 '파이프라인이 창출할 가치'에 주목해야 합니다.</p>
+                    <span class="info-badge" style="color:var(--neon)">파이프라인 경쟁력</span>
+                    <h3>이중항체부터 ADC까지</h3>
+                    <p>단순한 연구 단계에 머무르지 않고, 최적의 모달리티를 적용해 실제 조기 사업화와 글로벌 기술이전을 적극 추진 중입니다.</p>
                 </div>
             </div>
-            <div class="bottom-bar"><div class="bottom-text">냉정한 기업 분석</div><div class="page-indicator">02 / 06</div></div>
+            <div class="bottom-bar"><div class="bottom-text">기술적 해자 구축 완료</div><div class="page-indicator">02 / 06</div></div>
         </div>
 
-        <!-- 3페이지 -->
+        <!-- 3페이지 (임상 트리거 긍정 수정) -->
         <div class="card card-3">
             <div class="header-section">
                 <span class="page-num-header">03</span>
@@ -156,7 +155,8 @@
                 </div>
                 <div class="info-card dark" style="background:var(--dark); padding: 25px 20px;">
                     <h3 style="color:var(--neon); font-size:1.15rem;">🔥 추가 임상 모멘텀</h3>
-                    <p style="color:#d0d0d0;">이어 11월에도 추가 1상 IND 신청이 예고되어 있어, 임상 승인 여부가 주가 반등의 최우선 트리거입니다.</p>
+                    <!-- 주가 반등 -> 기업 가치 상승으로 텍스트 변경 -->
+                    <p style="color:#d0d0d0;">이어 11월에도 추가 1상 IND 신청이 예고되어 있어, 성공적인 임상 승인 여부가 기업 가치 상승의 최우선 트리거입니다.</p>
                 </div>
             </div>
             <div class="bottom-bar"><div class="bottom-text">가시적인 파이프라인</div><div class="page-indicator">03 / 06</div></div>
@@ -239,14 +239,12 @@
     });
 
     // 🚨 2. 자연스러운 뫼비우스 띠(Infinite Loop)를 위한 클론(복제) 생성
-    // 6번 뒤에 1번을 붙이고, 1번 앞에 6번을 붙입니다.
     const firstCardClone = cards[0].cloneNode(true);
     const lastCardClone = cards[cards.length - 1].cloneNode(true);
 
-    container.appendChild(firstCardClone);       // 맨 뒤에 1번 복제본 추가
-    container.insertBefore(lastCardClone, cards[0]); // 맨 앞에 6번 복제본 추가
+    container.appendChild(firstCardClone);       
+    container.insertBefore(lastCardClone, cards[0]); 
 
-    // 상태 변수 재설정 (진짜 1번 페이지는 이제 인덱스 1이 됩니다)
     const totalOriginalCards = cards.length;
     let currentIndex = 1; 
     let startX = 0;
@@ -261,22 +259,20 @@
         if (animate) {
             container.style.transition = 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
         } else {
-            container.style.transition = 'none'; // 몰래 이동할 때는 애니메이션 끄기
+            container.style.transition = 'none'; 
         }
         container.style.transform = `translateX(-${currentIndex * 100}vw)`; 
     }
 
     // 🚨 4. 트랜지션(넘어가는 애니메이션)이 끝났을 때 눈속임 처리
     container.addEventListener('transitionend', () => {
-        // 맨 뒤에 있는 가짜 1번(클론)에 도달했다면?
         if (currentIndex === totalOriginalCards + 1) {
-            currentIndex = 1; // 진짜 1번으로 몰래 위치 변경
-            updateTransform(false); // 애니메이션 없이 쓱!
+            currentIndex = 1; 
+            updateTransform(false); 
         }
-        // 맨 앞에 있는 가짜 6번(클론)에 도달했다면?
         else if (currentIndex === 0) {
-            currentIndex = totalOriginalCards; // 진짜 6번으로 몰래 위치 변경
-            updateTransform(false); // 애니메이션 없이 쓱!
+            currentIndex = totalOriginalCards; 
+            updateTransform(false); 
         }
     });
 
